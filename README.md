@@ -1,11 +1,11 @@
 # TinaCMS *True* Self-hosted example
 
-This is an example repository exploring a way of achieving a actually self-hosted TinaCMS-powered website, which doesn't depend on centralized cloud services like GitHub, Vercel, Netlify, Cloudinary, and the like. Not for the faint of heart, but if you are frustrated with the way TinaCMS has been skirting around the self-hosted issue, this repository might be for you!
+This is an example repository exploring a way of achieving an truly-self-hosted TinaCMS-powered website, which doesn't depend on centralized cloud services like GitHub, Vercel, Netlify, Cloudinary, and the like. Not for the faint of heart, but if you are frustrated with the way TinaCMS has been skirting around self-hosting with instructions for running things on top of non-self-hostable services, this repository might be for you!
 
-To achieve self-hosting, we use:
+To achieve this, we use:
 
 * [`simple-git`](https://www.npmjs.com/package/simple-git) to access a local fork of the repository (see [`simple-git-provider.ts`](./tina/simple-git-provider.ts))
-* [`classic-level`](https://www.npmjs.com/package/classic-level) to store a local database, with a workaround for [tinacms/tinacms#4492](https://github.com/tinacms/tinacms/issues/4492) (see [`patch-tina-cli.sh`](./patch-tina-cli.sh) and [`database.ts`](./tina/database.ts))
+* [`classic-level`](https://www.npmjs.com/package/classic-level) to store a local database (see [`database.ts`](./tina/database.ts)), with a hacky workaround for [tinacms/tinacms#4492](https://github.com/tinacms/tinacms/issues/4492) (see [`patch-tina-cli.sh`](./patch-tina-cli.sh))
 * [`express`](https://expressjs.com/) for hosting the backend (see [`handler.ts`](./tina/handler.ts))
 * [11ty / Eleventy](https://www.11ty.dev/) for building the static website (see [`eleventy.config.mjs`](./eleventy.config.mjs))
 
