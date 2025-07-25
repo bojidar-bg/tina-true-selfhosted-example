@@ -9,7 +9,7 @@
     "build": "export NODE_OPTIONS='--import tsx'; ./patch-tina-cli.sh && tinacms build --skip-search-index && eleventy",
     "clean": "[ -e _site ] && rm -r _site || true; [ -e _db ] && rm -r _db || true",
     "clean-build": "npm run clean && npm run build",
-    "dev": "export NODE_OPTIONS='--import tsx'; ./patch-tina-cli.sh && tinacms dev --skip-search-index -c 'eleventy --serve'",
+    "dev": "export NODE_OPTIONS='--import tsx'; ./patch-tina-cli.sh && tinacms dev -c 'eleventy --serve'",
     "serve": "export NODE_OPTIONS='--import tsx'; node tina/server"
   },
   "dependencies": {
