@@ -113,4 +113,4 @@ Both the build and edit repositories may be shallow clones or work trees if you 
 This example, while serving as a potential starting point for setting up a truly self-hosted TinaCMS server, is not (yet) complete:
 
 * The media library doesn't working—seems to be a limitation of self-hosted Tina [tinacms/tinacms#4486](https://github.com/tinacms/tinacms/issues/4486). It should be possible to get a self-hosted S3 API running for media storage.
-* 
+* `tinacms dev` currently fails with an odd `Database is not open` error. It would be nice to be able to use the development watcher/server of `tinacms` on top of `eleventy --serve`, however.

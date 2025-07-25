@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import * as tinaHandler from "./tina/handler"
 const createApp = tinaHandler.default.default // TSX fail?
 const app = createApp()
