@@ -1,0 +1,22 @@
+{
+  "name": "tina-true-selfhosted-example",
+  "version": "1.0.0",
+  "description": "A real example of self-hosting tina, without cloud offerings.",
+  "main": "index.js",
+  "author": "Bojidar Marinov <bojidar.marinov.bg@gmail.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@tinacms/datalayer": "^1.4.0",
+    "better-sqlite3": "^12.2.0",
+    "fs-extra": "^11.3.0",
+    "simple-git": "^3.28.0",
+    "sqlite-level": "^1.2.1",
+    "tinacms": "^2.8.1",
+    "tinacms-authjs": "^11.0.1"
+  },
+  "devDependencies": {
+    "@tinacms/cli": "^1.10.1",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^24.1.0"
+  }
+}
