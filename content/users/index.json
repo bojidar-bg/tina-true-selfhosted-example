@@ -1,0 +1,13 @@
+{
+  "users": [
+    {
+      "name": "Default User",
+      "email": "invalid@invalid.invalid",
+      "username": "admin",
+      "password": {
+        "value": "admin",
+        "passwordChangeRequired": true
+      }
+    }
+  ]
+}

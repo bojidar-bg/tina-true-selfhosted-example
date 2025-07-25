@@ -1,3 +1,6 @@
 node_modules
 build
 __generated__
+.env
+_site
+_db

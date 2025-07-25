@@ -8,7 +8,7 @@ export interface SimpleGitProviderOptions {
   repoDir: string
   
   /// If set, configures how to clone the repository
-  clone?: {
+  cloneRepo?: {
     remote: string,
     options?: CloneOptions,
   }
@@ -36,7 +36,7 @@ export class SimpleGitProvider implements GitProvider {
     this.initPromise = this.init();
     this.commitMessage = typeof options.commitMessage == 'function' ?
       options.commitMessage :
-      () => (options.commitMessage + '' || 'Edited with TinaCMS');
+      () => (options.commitMessage || 'Edited with TinaCMS') + '';
     this.encoding = options.encoding || 'utf8'
   }
   
@@ -50,10 +50,10 @@ export class SimpleGitProvider implements GitProvider {
     this.gitClient = simpleGit(simpleGitOptions);
     // Ensure we have a repository
     if (!await this.gitClient.checkIsRepo()) {
-      if (this.options.clone) {
+      if (this.options.cloneRepo) {
         await this.gitClient.clone(
-          this.options.clone.remote,
-          this.options.clone.options)
+          this.options.cloneRepo.remote,
+          this.options.cloneRepo.options)
       } else {
         throw new Error(`Not a git repository: ${this.options.repoDir}`);
       }
@@ -85,6 +85,7 @@ export class SimpleGitProvider implements GitProvider {
   }
   
   private async makeCommit(file: string): Promise<void> {
+    await this.gitClient.add([file])
     await this.gitClient.commit(this.commitMessage(file), [file])
     if (this.options.pushRepo ?? true) {
       await this.gitClient.push()
