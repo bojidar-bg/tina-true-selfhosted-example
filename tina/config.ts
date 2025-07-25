@@ -1,12 +1,14 @@
-import { defineConfig } from "tinacms";
+import { Config, defineConfig, DocumentCreatorCallback, MediaStoreClass, TinaCMS } from "tinacms";
 import {
   TinaUserCollection,
   UsernamePasswordAuthJSProvider,
 } from 'tinacms-authjs/dist/tinacms'
+import { formifyCallback } from "tinacms/dist/hooks/use-graphql-forms";
+import { BetterMediaStoreConfig } from "./better-media-store";
 
 const branch = process.env.GIT_BRANCH || "main";
 
-export default defineConfig({
+export const config: BetterMediaStoreConfig & Config<(cms: TinaCMS) => TinaCMS, formifyCallback, DocumentCreatorCallback, MediaStoreClass> = {
   contentApiUrlOverride: '/api/tina/gql',
   branch,
   authProvider: new UsernamePasswordAuthJSProvider(),
@@ -16,11 +18,10 @@ export default defineConfig({
     outputFolder: "admin",
   },
   media: {
-    tina: {
-      mediaRoot: "uploads",
-      publicFolder: "public",
-      static: true,
-    },
+    loadCustomStore: async () => (await import("./better-media-store")).BetterMediaStore,    
+  },
+  mediaStoreOptions: {
+    mediaRoot: "uploads"
   },
   schema: {
     collections: [
@@ -47,4 +48,5 @@ export default defineConfig({
       },
     ],
   },
-});
+}
+export default defineConfig(config);

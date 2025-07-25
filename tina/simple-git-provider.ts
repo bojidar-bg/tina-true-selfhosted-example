@@ -26,7 +26,7 @@ export interface SimpleGitProviderOptions {
 
 export class SimpleGitProvider implements GitProvider {
   private gitClient: SimpleGit;
-  private options: SimpleGitProviderOptions;
+  public options: SimpleGitProviderOptions;
   private initPromise: Promise<void>;
   private commitMessage: ((path: string) => string);
   private encoding: BufferEncoding;
@@ -84,7 +84,7 @@ export class SimpleGitProvider implements GitProvider {
     await this.makeCommit(key)
   }
   
-  private async makeCommit(file: string): Promise<void> {
+  async makeCommit(file: string): Promise<void> {
     await this.gitClient.add([file])
     await this.gitClient.commit(this.commitMessage(file), [file])
     if (this.options.pushRepo ?? true) {

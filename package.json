@@ -9,24 +9,26 @@
     "build": "export NODE_OPTIONS='--import tsx'; ./patch-tina-cli.sh && tinacms build --skip-search-index && eleventy",
     "clean": "[ -e _site ] && rm -r _site || true; [ -e _db ] && rm -r _db || true",
     "clean-build": "npm run clean && npm run build",
-    "dev": "npm run build -- --serve",
+    "dev": "export NODE_OPTIONS='--import tsx'; ./patch-tina-cli.sh && tinacms dev --skip-search-index -c 'eleventy --serve'",
     "serve": "export NODE_OPTIONS='--import tsx'; node tina/server"
   },
   "dependencies": {
     "@11ty/eleventy": "^3.1.2",
     "@auth/express": "^0.11.0",
     "@tinacms/datalayer": "^1.4.0",
-    "classic-level": "1.4",
+    "busboy": "^1.6.0",
     "cookie-parser": "^1.4.7",
     "dotenv": "^17.2.1",
     "express": "^4.21.2",
     "fs-extra": "^11.3.0",
+    "rave-level": "^1.0.0",
     "simple-git": "^3.28.0",
     "tinacms": "^2.8.1",
     "tinacms-authjs": "^11.0.1"
   },
   "devDependencies": {
     "@tinacms/cli": "^1.10.1",
+    "@types/busboy": "^1.5.4",
     "@types/cookie-parser": "^1.4.9",
     "@types/express": "^5.0.3",
     "@types/fs-extra": "^11.0.4",

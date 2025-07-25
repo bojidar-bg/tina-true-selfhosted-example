@@ -5,6 +5,7 @@ This is an example repository exploring a way of achieving an truly-self-hosted 
 To achieve this, we use:
 
 * [`simple-git`](https://www.npmjs.com/package/simple-git) to access a local fork of the repository (see [`simple-git-provider.ts`](./tina/simple-git-provider.ts))
+* `BetterMediaStore`, a light reimplementation of Tina's MediaStore to workaround [tinacms/tinacms#4486](https://github.com/tinacms/tinacms/issues/4486) (see [`better-media-store.ts`](./tina/better-media-store.ts) and [`better-media-store-server.ts`](./tina/better-media-store-server.ts))
 * [`classic-level`](https://www.npmjs.com/package/classic-level) to store a local database (see [`database.ts`](./tina/database.ts)), with a hacky workaround for [tinacms/tinacms#4492](https://github.com/tinacms/tinacms/issues/4492) (see [`patch-tina-cli.sh`](./patch-tina-cli.sh))
 * [`express`](https://expressjs.com/) for hosting the backend (see [`handler.ts`](./tina/handler.ts))
 * [11ty / Eleventy](https://www.11ty.dev/) for building the static website (see [`eleventy.config.mjs`](./eleventy.config.mjs))
@@ -110,7 +111,5 @@ Both the build and edit repositories may be shallow clones or work trees if you 
 
 ## What's missing
 
-This example, while serving as a potential starting point for setting up a truly self-hosted TinaCMS server, is not (yet) complete:
+This example, while serving as a potential starting point for setting up a truly self-hosted TinaCMS server, is not (yet) complete. There might still be issues to hit on the way to production (known-unknowns), and in addition, the whole setup would be improved if BetterMediaStore and SimpleGitProvider were exposed as one or two NPM packages.
 
-* The media library doesn't working—seems to be a limitation of self-hosted Tina [tinacms/tinacms#4486](https://github.com/tinacms/tinacms/issues/4486). It should be possible to get a self-hosted S3 API running for media storage.
-* `tinacms dev` currently fails with an odd `Database is not open` error. It would be nice to be able to use the development watcher/server of `tinacms` on top of `eleventy --serve`, however.
