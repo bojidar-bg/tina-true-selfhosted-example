@@ -1,10 +1,11 @@
-import { Config, defineConfig, DocumentCreatorCallback, MediaStoreClass, TinaCMS } from "tinacms";
+import { Config, defineConfig, DocumentCreatorCallback, MediaStoreClass, TinaCMS, wrapFieldsWithMeta } from "tinacms";
 import {
   TinaUserCollection,
   UsernamePasswordAuthJSProvider,
 } from 'tinacms-authjs/dist/tinacms'
 import { formifyCallback } from "tinacms/dist/hooks/use-graphql-forms";
 import { BetterMediaStoreConfig } from "./better-media-store";
+import { MDXEditorField } from "./mdx-editor";
 
 const branch = process.env.GIT_BRANCH || "main";
 
@@ -39,10 +40,13 @@ export const config: BetterMediaStoreConfig & Config<(cms: TinaCMS) => TinaCMS, 
             required: true,
           },
           {
-            type: "rich-text",
+            type: "string",
             name: "body",
             label: "Body",
             isBody: true,
+            ui: {
+              component: wrapFieldsWithMeta(MDXEditorField) as any
+            }
           },
         ],
       },

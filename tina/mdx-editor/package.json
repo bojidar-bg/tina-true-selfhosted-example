@@ -1,0 +1,4 @@
+{
+  "main": "dummy.tsx",
+  "browser": "mdx-editor.tsx"
+}

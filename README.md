@@ -7,6 +7,7 @@ To achieve this, we use:
 * [`simple-git`](https://www.npmjs.com/package/simple-git) to access a local fork of the repository (see [`simple-git-provider.ts`](./tina/simple-git-provider.ts))
 * `BetterMediaStore`, a light reimplementation of Tina's MediaStore to workaround [tinacms/tinacms#4486](https://github.com/tinacms/tinacms/issues/4486) (see [`better-media-store.ts`](./tina/better-media-store.ts) and [`better-media-store-server.ts`](./tina/better-media-store-server.ts))
 * [`classic-level`](https://www.npmjs.com/package/classic-level) to store a local database (see [`database.ts`](./tina/database.ts)), with a hacky workaround for [tinacms/tinacms#4492](https://github.com/tinacms/tinacms/issues/4492) (see [`patch-tina-cli.sh`](./patch-tina-cli.sh))
+* [`@mdxeditor/editor`](https://www.npmjs.com/package/@mdxeditor/editor) to have a more featureful markdown editor compared to the built-in Tina rich-text editor (see [`mdx-editor.ts`](./tina/mdx-editor/mdx-editor.tsx)) - Optional; needed for the overall usecase this example is being prepared for, and will be split off in its own repository once everything is stable.
 * [`express`](https://expressjs.com/) for hosting the backend (see [`handler.ts`](./tina/handler.ts))
 * [11ty / Eleventy](https://www.11ty.dev/) for building the static website (see [`eleventy.config.mjs`](./eleventy.config.mjs))
 
@@ -37,7 +38,8 @@ The main things you want to change in the code are:
 * `tina/config.ts`: You should configure your own collections here.
 * `tina/database.ts`: Consider changing the options passed to `SimpleGitProvider`, especially `pushRepo`, `pullRepo`, and `cloneRepo`, so that they would fit your usecase.
 * `eleventy.config.mjs`: You can probably swap this out for a different build system, or just configure to fit your needs.
-* `tina/server.ts`: If you are behind a proxy like `nginx`, you can probably remove the `express.static()` line. Also, 
+* `tina/server.ts`: If you are behind a proxy like `nginx`, you can probably remove the `express.static()` line.
+* `tina/mdx-editor/`: Feel free to remove this folder if you are using Tina's builtin Markdown editor.
 
 Then, you should consider configuring the following environment variables (either through `.env` or through your deployment pipeline):
 
@@ -107,9 +109,9 @@ HERE
 chmod u+x ./build/.git/hooks/post-merge
 ```
 
-Both the build and edit repositories may be shallow clones or work trees if you prefer doing that; this is left as an exercise to the reader.
+Both the build and edit repositories may be shallow clones or work trees if you prefer doing that; figuring out the specifics of this is left as an exercise to the reader.
 
 ## What's missing
 
-This example, while serving as a potential starting point for setting up a truly self-hosted TinaCMS server, is not (yet) complete. There might still be issues to hit on the way to production (known-unknowns), and in addition, the whole setup would be improved if BetterMediaStore and SimpleGitProvider were exposed as one or two NPM packages.
+This example, while serving as a potential starting point for setting up a truly self-hosted TinaCMS server, is not (yet) complete. There might still be issues to hit on the way to production (known-unknowns), and in addition, the whole setup would be improved if BetterMediaStore, SimpleGitProvider, and MDXEditorField were exposed as separate NPM packages.
 
