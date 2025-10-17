@@ -6,8 +6,8 @@
   "author": "Bojidar Marinov <bojidar.marinov.bg@gmail.com>",
   "license": "Apache-2.0",
   "scripts": {
-    "build": "export NODE_OPTIONS='--import tsx'; ./patch-tina-cli.sh && tinacms build --skip-search-index && eleventy",
-    "clean": "[ -e _site ] && rm -r _site || true; [ -e _db ] && rm -r _db || true",
+    "build": "export NODE_OPTIONS='--import tsx'; ./patch-tina-cli.sh && tinacms build --skip-indexing --skip-search-index && eleventy",
+    "clean": "[ -e _site ] && rm -r _site || true",
     "clean-build": "npm run clean && npm run build",
     "dev": "export NODE_OPTIONS='--import tsx'; ./patch-tina-cli.sh && tinacms dev -c 'eleventy --serve'",
     "serve": "export NODE_OPTIONS='--import tsx'; node tina/server"
@@ -15,15 +15,15 @@
   "dependencies": {
     "@11ty/eleventy": "^3.1.2",
     "@auth/express": "^0.11.0",
+    "@bojidar-bg/tina-mdx-editor": "^0.1.0",
+    "@bojidar-bg/tina-simple-git-provider": "^0.1.0",
+    "@bojidar-bg/tina-simple-media-store": "^0.1.0",
     "@mdxeditor/editor": "^3.47.0",
     "@tinacms/datalayer": "^1.4.0",
-    "busboy": "^1.6.0",
     "cookie-parser": "^1.4.7",
     "dotenv": "^17.2.1",
     "express": "^4.21.2",
-    "fs-extra": "^11.3.0",
     "rave-level": "^1.0.0",
-    "simple-git": "^3.28.0",
     "tinacms": "^2.9.0",
     "tinacms-authjs": "^12.0.0"
   },

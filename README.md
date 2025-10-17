@@ -4,14 +4,14 @@ This is an example repository exploring a way of achieving an truly-self-hosted 
 
 To achieve this, we use:
 
-* [`simple-git`](https://www.npmjs.com/package/simple-git) to access a local fork of the repository (see [`simple-git-provider.ts`](./tina/simple-git-provider.ts))
-* `BetterMediaStore`, a light reimplementation of Tina's MediaStore to workaround [tinacms/tinacms#4486](https://github.com/tinacms/tinacms/issues/4486) (see [`better-media-store.ts`](./tina/better-media-store.ts) and [`better-media-store-server.ts`](./tina/better-media-store-server.ts))
-* [`classic-level`](https://www.npmjs.com/package/classic-level) to store a local database (see [`database.ts`](./tina/database.ts)), with a hacky workaround for [tinacms/tinacms#4492](https://github.com/tinacms/tinacms/issues/4492) (see [`patch-tina-cli.sh`](./patch-tina-cli.sh))
-* [`@mdxeditor/editor`](https://www.npmjs.com/package/@mdxeditor/editor) to have a more featureful markdown editor compared to the built-in Tina rich-text editor (see [`mdx-editor.ts`](./tina/mdx-editor/mdx-editor.tsx)) - Optional; needed for the overall usecase this example is being prepared for, and will be split off in its own repository once everything is stable.
+* [`@bojidar-bg/tina-simple-git-provider`](https://www.npmjs.com/package/@bojidar-bg/tina-simple-git-provider) to access a local fork of a repository instead of depending on GitHub for repository hosting.
+* [`@bojidar-bg/tina-simple-media-store`](https://www.npmjs.com/package/@bojidar-bg/tina-simple-media-store), a light reimplementation of Tina's MediaStore to workaround [tinacms/tinacms#4486](https://github.com/tinacms/tinacms/issues/4486)
+* [`rave-level`](https://www.npmjs.com/package/rave-level) to store a local database (see [`database.ts`](./tina/database.ts)), with a hacky workaround for [tinacms/tinacms#4492](https://github.com/tinacms/tinacms/issues/4492) (see [`patch-tina-cli.sh`](./patch-tina-cli.sh))
 * [`express`](https://expressjs.com/) for hosting the backend (see [`handler.ts`](./tina/handler.ts))
 * [11ty / Eleventy](https://www.11ty.dev/) for building the static website (see [`eleventy.config.mjs`](./eleventy.config.mjs))
+* [`@bojidar-bg/tina-mdx-editor`](https://www.npmjs.com/package/@bojidar-bg/tina-mdx-editor) to have a more featureful markdown editor compared to the built-in Tina rich-text editor - you can probably remove that when adapting this example to your own usecase.
 
-In particular, we don't use TinaCMS's local mode, and instead run everything the same way we would run it in production.
+In particular, we don't use TinaCMS's local mode, and instead run everything locally the same way we would run it in production.
 
 ## Running the example
 
@@ -22,7 +22,8 @@ cp .env.example .env
 
 npm install
 
-npm run dev
+npm run build
+npm run serve
 ```
 
 Then, if you open `localhost:8080` (Eleventy's default port), you should be greeted by the working example.
@@ -39,12 +40,11 @@ The main things you want to change in the code are:
 * `tina/database.ts`: Consider changing the options passed to `SimpleGitProvider`, especially `pushRepo`, `pullRepo`, and `cloneRepo`, so that they would fit your usecase.
 * `eleventy.config.mjs`: You can probably swap this out for a different build system, or just configure to fit your needs.
 * `tina/server.ts`: If you are behind a proxy like `nginx`, you can probably remove the `express.static()` line.
-* `tina/mdx-editor/`: Feel free to remove this folder if you are using Tina's builtin Markdown editor.
 
 Then, you should consider configuring the following environment variables (either through `.env` or through your deployment pipeline):
 
 * `AUTH_SECRET` - should be a random value, e.g. from something like `openssl rand -base64 32`.
-* `LEVELDB_PATH` - should be a path to a persisted directory where TinaCMS stores its data (e.g. users).
+* `LEVELDB_PATH` - should be a path to a persisted directory where TinaCMS stores its data (such as users).
 * `GIT_REPO` - set this to a path to a git repository, as descibed below.
 
 Finally, to run the server-side component without watching for changes, you can use:
@@ -57,7 +57,7 @@ npm run serve
 
 ### Setting up bare git repositories and hooks for production use
 
-In a production setting where you pushing to a bare Git repository over SSH, you would want to have three git repositories set up:
+In a production setting where you are pushing to a bare Git repository over SSH, you would want to have three git repositories set up:
 
 * The bare repository, which is what you are going to use to push to the server.
 * The build repository, which is where the website is built from.
@@ -113,5 +113,5 @@ Both the build and edit repositories may be shallow clones or work trees if you 
 
 ## What's missing
 
-This example, while serving as a potential starting point for setting up a truly self-hosted TinaCMS server, is not (yet) complete. There might still be issues to hit on the way to production (known-unknowns), and in addition, the whole setup would be improved if BetterMediaStore, SimpleGitProvider, and MDXEditorField were exposed as separate NPM packages.
+This example, while serving as a potential starting point for setting up a truly self-hosted TinaCMS server, is only a proof of concept. It has not been ran in production yet.
 
